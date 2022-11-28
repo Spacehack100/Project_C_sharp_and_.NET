@@ -118,8 +118,8 @@ class ApiDataStore : IDataStore
     public async Task<string> DeleteItem(string name)
     {
         HttpClient client = new HttpClient();
-        string response = await client.DeleteAsync("http://10.0.2.2:8000/api/item/" + name);
-        return response;
+        await client.DeleteAsync("http://10.0.2.2:8000/api/item/" + name);
+        return "Ok";
     }
 
     public async Task<List<Item>> GetAllItems()
