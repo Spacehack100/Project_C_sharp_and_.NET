@@ -1,6 +1,10 @@
-﻿using CoreMotion;
+﻿//using CoreMotion;
+using Newtonsoft.Json;
 using System.ComponentModel;
+using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 
 namespace Project_C_sharp_and_.NET;
 
@@ -19,10 +23,11 @@ public interface IDataStore
 {
 	public List<Item> itemList { get; set; }
 
-	String AddItem(Item itemToAdd);
-	Item GetItembyName(string name);
-	String EditItem(string name);
-	String DeleteItem(string name);
+	Task<String> AddItem(Item itemToAdd);
+    Task<List<Item>> GetAllItems();
+	Task<Item> GetItembyName(string name);
+	Task<String> EditItem(Item itemToEdit);
+	Task<String> DeleteItem(string name);
 }
 
 public class BaseViewModel : INotifyPropertyChanged
@@ -46,25 +51,34 @@ class TestDataStore : IDataStore
 		itemList = new List<Item>();
 	}
 
-    public String AddItem(Item itemToAdd)
+    public async Task<String> AddItem(Item itemToAdd)
 	{
-		return "not done";
+        itemList.Add(itemToAdd);
+        return "Item succesfully added.";
 	}
 
-    public Item GetItembyName(string name)
+    public async Task<Item> GetItembyName(string name)
 	{
         Item temp = new Item();
+        temp = itemList.Where(i => i.name.Equals(name)).FirstOrDefault();
         return temp;
     }
 
-    public String EditItem(string name)
+    public async Task<String> EditItem(Item itemToEdit)
 	{
+        return "ok";
+    }
+
+    public async Task<String> DeleteItem(string name)
+	{
+        Item itemToDelete = itemList.Where(i => i.name.Equals(name)).FirstOrDefault();
+
         return "not done";
     }
 
-    public String DeleteItem(string name)
-	{
-        return "not done";
+    public async Task<List<Item>> GetAllItems()
+    {
+        return itemList;
     }
 }
 
@@ -77,32 +91,49 @@ class ApiDataStore : IDataStore
         itemList = new List<Item>();
     }
 
-    public String AddItem(Item itemToAdd)
+    public async Task<string> AddItem(Item itemToAdd)
     {
-        return "not done";
+        HttpClient client = new HttpClient();
+        string addString = JsonConvert.SerializeObject(itemToAdd);
+        await client.PostAsJsonAsync("http://10.0.2.2:8000/api/item/", addString);
+        return "Ok";
     }
 
-    public Item GetItembyName(string name)
+    public async Task<Item> GetItembyName(string name)
     {
-		Item temp = new Item();
+        HttpClient client = new HttpClient();
+        string response = await client.GetStringAsync("http://10.0.2.2:8000/api/item/" + name);
+        Item temp = new Item();
         return temp;
     }
 
-    public String EditItem(string name)
+    public async Task<String> EditItem(Item itemToEdit)
     {
-        return "not done";
+        HttpClient client = new HttpClient();
+        string addString = JsonConvert.SerializeObject(itemToEdit);
+        await client.PutAsJsonAsync("http://10.0.2.2:8000/api/item/" + itemToEdit.name, addString);
+        return "Ok";
     }
 
-    public String DeleteItem(string name)
+    public async Task<string> DeleteItem(string name)
     {
-        return "not done";
+        HttpClient client = new HttpClient();
+        string response = await client.DeleteAsync("http://10.0.2.2:8000/api/item/" + name);
+        return response;
     }
+
+    public async Task<List<Item>> GetAllItems()
+    {
+        HttpClient client = new HttpClient();
+        string response = await client.GetStringAsync("http://10.0.2.2:8000/api/item");
+        return JsonConvert.DeserializeObject<List<Item>>(response);
+    }
+
 }
 
 public struct Item
 {
-	string name { get; set; }
-	int value1 { get; set; }
-	int value2 { get; set; }
-	string value3 { get; set; }
+	public string name { get; set; }
+	public int gsmNumber { get; set; }
+    public int landLineNumber { get; set; }
 }

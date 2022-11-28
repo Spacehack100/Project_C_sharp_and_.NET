@@ -3,10 +3,12 @@
 public partial class MainPage : ContentPage
 {
 	int count = 0;
+	MainViewModel mvm;
 
 	public MainPage()
 	{
 		InitializeComponent();
+		BindingContext = mvm = new MainViewModel();
 	}
 
 	private void OnCounterClicked(object sender, EventArgs e)
@@ -22,3 +24,7 @@ public partial class MainPage : ContentPage
 	}
 }
 
+public class MainViewModel : BaseViewModel
+{
+	public string testString { get; set; } = "test";
+}
