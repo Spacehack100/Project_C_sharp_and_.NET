@@ -31,7 +31,7 @@ public partial class MainPage : ContentPage
 public class MainViewModel : BaseViewModel
 {
 	public string testString { get; set; } = "test";
-	public ObservableCollection<Item> listItems { get; set; }
+	public ObservableCollection<Item> listItems { get; set; } = new ObservableCollection<Item>();
 	public Command RefreshCommand { get; }
 
 	public MainViewModel()
