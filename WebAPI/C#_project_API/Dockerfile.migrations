@@ -1,0 +1,7 @@
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build_env
+WORKDIR /App
+COPY *.csproj .
+RUN dotnet restore
+COPY . .
+
+RUN dotnet tool install --global dotnet-ef

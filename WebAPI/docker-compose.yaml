@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  api_project:
+    build: ./C#_project_API
+    container_name: API_project
+    environment:
+      MYSQL_SERVER_NAME: ${MYSQL_SERVER_NAME}
+    ports: 
+      - 8000:80
+    networks:
+      - C#_app_network
+
+  database_project:
+    image: mysql
+    container_name: ${MYSQL_SERVER_NAME}
+    env_file:
+      - secrets.env
+    volumes: 
+      - mysqldata:/var/lib/mysql
+    networks:
+      - C#_app_network
+
+  database_migration:
+    build:
+      context: ./C#_project_API
+      dockerfile: Dockerfile.migrations
+    container_name: database_migration
+    env_file:
+      - secrets.env
+    tty: true
+    networks:
+      - C#_app_network
+
+networks: 
+  C#_app_network:
+
+volumes:
+  mysqldata:

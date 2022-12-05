@@ -1,4 +1,7 @@
-﻿namespace Project_C_sharp_and_.NET;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+
+namespace Project_C_sharp_and_.NET;
 
 public partial class MainPage : ContentPage
 {
@@ -27,4 +30,22 @@ public partial class MainPage : ContentPage
 public class MainViewModel : BaseViewModel
 {
 	public string testString { get; set; } = "test";
+	public ObservableCollection<Item> listItems { get; set; }
+	public Command RefreshCommand { get; }
+
+	public MainViewModel()
+	{
+		//RefreshCommand = new Command(RefreshList);
+	}
+
+/**	public async void RefreshList()
+    {
+        listItems.Clear();
+        var items = await DataStore.GetAllItems();
+		foreach(Item i in items)
+		{
+			listItems.Add(i);
+            OnPropetyChanged();
+        }
+    }**/
 }

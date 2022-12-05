@@ -35,9 +35,27 @@
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />
 
-            <ScrollView
-                x:Name="ItemScrollView"
-                />
+            <Button 
+                x:Name="RefreshBtn"
+                Text="Refresh"
+                SemanticProperties.Hint="Refresh the phone list"
+                Command="{Binding RefreshCommand}"
+                HorizontalOptions="CenterAndExpand"/>
+
+            <ListView ItemsSource="{Binding listItems}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <VerticalStackLayout Margin="5">
+                                <Label Text="{Binding name}"
+                                       FontAttributes="Bold"/>
+                                <Label Text="{Binding gsmNumber}"/>
+                                <Label Text="{Binding landLineNumber}"/>
+                            </VerticalStackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
         </VerticalStackLayout>
     </ScrollView>
