@@ -12,6 +12,7 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = mvm = new MainViewModel();
+
 	}
 
 	private void OnCounterClicked(object sender, EventArgs e)
@@ -35,10 +36,16 @@ public class MainViewModel : BaseViewModel
 
 	public MainViewModel()
 	{
-		//RefreshCommand = new Command(RefreshList);
-	}
+		RefreshCommand = new Command(RefreshList);
+		FillList();
 
-/**	public async void RefreshList()
+    }
+
+	public void RefreshList()
+	{
+		FillList();
+	}
+	public async void FillList()
     {
         listItems.Clear();
         var items = await DataStore.GetAllItems();
@@ -47,5 +54,6 @@ public class MainViewModel : BaseViewModel
 			listItems.Add(i);
             OnPropetyChanged();
         }
-    }**/
+
+    }
 }
