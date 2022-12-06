@@ -5,52 +5,32 @@
 
     <ScrollView>
         <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
+            Spacing="10"
+            Padding="5,0"
             VerticalOptions="Center">
-
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="{Binding testString}"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
 
             <Button 
                 x:Name="RefreshBtn"
                 Text="Refresh"
                 SemanticProperties.Hint="Refresh the phone list"
                 Command="{Binding RefreshCommand}"
-                HorizontalOptions="CenterAndExpand"/>
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Start"/>
 
-            <ListView ItemsSource="{Binding listItems}">
+            <ListView ItemsSource="{Binding listItems}" RowHeight="70">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <VerticalStackLayout Margin="5">
                                 <Label Text="{Binding name}"
-                                       FontAttributes="Bold"/>
-                                <Label Text="{Binding gsmNumber}"/>
-                                <Label Text="{Binding landLineNumber}"/>
+                                       FontAttributes="Bold"
+                                       VerticalOptions="Start"/>
+                                
+                                <Label Text="{Binding gsmNumber, StringFormat='GSM: {0}'}"
+                                       VerticalOptions="Center"/>
+
+                                <Label Text="{Binding landLineNumber, StringFormat='Land line: {0}'}"
+                                       VerticalOptions="End"/>
                             </VerticalStackLayout>
                         </ViewCell>
                     </DataTemplate>
