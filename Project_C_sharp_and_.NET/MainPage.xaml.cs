@@ -11,7 +11,7 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = mvm = new MainViewModel();
-
+		
 	}
 }
 
@@ -20,13 +20,21 @@ public class MainViewModel : BaseViewModel
 	public string testString { get; set; } = "test";
 	public ObservableCollection<Item> listItems { get; set; } = new ObservableCollection<Item>();
 	public Command RefreshCommand { get; }
+	public Command AddCommand { get; }
 
-	public MainViewModel()
+
+    public MainViewModel()
 	{
 		RefreshCommand = new Command(RefreshList);
-		FillList();
+		AddCommand = new Command(AddContact);
 
+        FillList();
     }
+
+	public async void AddContact()
+	{
+		await Shell.Current.GoToAsync("////AddContact");
+	}
 
 	public void RefreshList()
 	{

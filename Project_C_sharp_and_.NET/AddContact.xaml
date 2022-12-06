@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Project_C_sharp_and_.NET.AddContact"
+             Title="Add contact">
+    <Grid Padding="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <Label Text="Name:"/>
+        <Label Text="GSM number:"
+               Grid.Row="1"/>
+        <Label Text="Land line number:"
+               Grid.Row="2"/>
+        <Entry x:Name="NameEntry"
+               ClearButtonVisibility="WhileEditing"
+               Placeholder="Enter the name"
+               Text="{Binding nameInput}"
+               Grid.Column="1"/>
+        <Entry x:Name="GsmEntry"
+               ClearButtonVisibility="WhileEditing"
+               Placeholder="Enter the GSM number"
+               Text="{Binding gsmInput}"
+               Grid.Row="1"
+               Grid.Column="1"/>
+        <Entry x:Name="LandLineEntry"
+               ClearButtonVisibility="WhileEditing"
+               Placeholder="Enter the land line number"
+               Text="{Binding landLineInput}"
+               Grid.Row="2"
+               Grid.Column="1"/>
+        <Button x:Name="CancelBtn"
+                Text="Cancel"
+                Command="{Binding CancelCommand}"
+                Grid.Row="3"/>
+        <Button x:Name="ConfirmBtn"
+                Text="Save"
+                Command="{Binding ConfirmCommand}"
+                Grid.Row="3"
+                Grid.Column="1"/>
+    </Grid>
+</ContentPage>

@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Project_C_sharp_and_.NET.MainPage">
+             x:Class="Project_C_sharp_and_.NET.MainPage"
+             Title="Home">
 
     <ScrollView>
         <VerticalStackLayout
@@ -9,13 +10,21 @@
             Padding="5,0"
             VerticalOptions="Center">
 
-            <Button 
-                x:Name="RefreshBtn"
-                Text="Refresh"
-                SemanticProperties.Hint="Refresh the phone list"
-                Command="{Binding RefreshCommand}"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="Start"/>
+            <HorizontalStackLayout>
+                <Button 
+                    x:Name="RefreshBtn"
+                    Text="Refresh"
+                    SemanticProperties.Hint="Refresh the phone list"
+                    Command="{Binding RefreshCommand}"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Start"/>
+
+                <Button
+                    x:Name="AddBtn"
+                    Text="Add contact"
+                    SemanticProperties.Hint="Add contact to list"
+                    Command="{Binding AddCommand}"/>
+            </HorizontalStackLayout>
 
             <ListView ItemsSource="{Binding listItems}" RowHeight="70">
                 <ListView.ItemTemplate>
