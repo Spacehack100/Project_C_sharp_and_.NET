@@ -9,6 +9,7 @@ namespace C__project_API.Models
     {
         public int id { get; set; }
         public string name { get; set; }
-        public string value1 { get; set; }
+        public string gsmNumber { get; set; }
+        public string landLineNumber { get; set; }
     }
 }
