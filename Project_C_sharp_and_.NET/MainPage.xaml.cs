@@ -13,8 +13,13 @@ public partial class MainPage : ContentPage
 		BindingContext = mvm = new MainViewModel();
 		
 	}
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        mvm.RefreshList();
+    }
 
-	public void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
+    public void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
 	{
 		mvm.OnItemSelected();
     }
@@ -32,8 +37,6 @@ public class MainViewModel : BaseViewModel
 	{
 		RefreshCommand = new Command(RefreshList);
 		AddCommand = new Command(AddContact);
-
-        FillList();
     }
 
 	public async void AddContact()
