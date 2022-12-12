@@ -12,10 +12,10 @@ namespace C__project_API.Repositories
 
         public MockRepo()
         {
-            itemList.Add(new Item(){id=1, name="jens",value1="test1"});
-            itemList.Add(new Item(){id=2, name="sven",value1="test2"});
-            itemList.Add(new Item(){id=3, name="martine",value1="test3"});
-            itemList.Add(new Item(){id=4, name="jeff",value1="test4"});
+            itemList.Add(new Item(){id=1, name="jens",gsmNumber="+32586953214",landLineNumber="+322548165210"});
+            itemList.Add(new Item(){id=2, name="sven",gsmNumber="+65586953214",landLineNumber="+652548165210"});
+            itemList.Add(new Item(){id=3, name="martine",gsmNumber="+88586953214",landLineNumber="+882548165210"});
+            itemList.Add(new Item(){id=4, name="jeff",gsmNumber="+01586953214",landLineNumber=""});
         }
 
         public void AddItem(Item item)

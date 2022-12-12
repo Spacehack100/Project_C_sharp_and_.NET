@@ -14,9 +14,10 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+        
+        MainPage = new AppShell();
 
         DependencyService.Register<TestDataStore>();
-        MainPage = new AppShell();
     }
 }
 
@@ -72,14 +73,15 @@ class TestDataStore : IDataStore
 
     public async Task<String> EditItem(Item itemToEdit)
     {
+        
         return "ok";
     }
 
     public async Task<String> DeleteItem(string name)
     {
         Item itemToDelete = itemList.Where(i => i.name.Equals(name)).FirstOrDefault();
-
-        return "not done";
+        itemList.Remove(itemToDelete);
+        return "Item succesfully deleted.";
     }
 
     public async Task<ObservableCollection<Item>> GetAllItems()
