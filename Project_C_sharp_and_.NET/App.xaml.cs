@@ -73,7 +73,8 @@ class TestDataStore : IDataStore
 
     public async Task<String> EditItem(Item itemToEdit)
     {
-        
+        await DeleteItem(itemToEdit.name);
+        await AddItem(itemToEdit);
         return "ok";
     }
 
@@ -139,7 +140,7 @@ class ApiDataStore : IDataStore
 
 }
 
-public struct Item
+public class Item
 {
     public string name { get; set; }
     public string gsmNumber { get; set; }
