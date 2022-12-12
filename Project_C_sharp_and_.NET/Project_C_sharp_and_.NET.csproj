@@ -56,6 +56,9 @@
 	  <MauiXaml Update="AddContact.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="EditContact.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionProject_C_sharp_and_NETHideInfoBar="True" /></VisualStudio></ProjectExtensions>

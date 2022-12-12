@@ -13,15 +13,20 @@ public partial class MainPage : ContentPage
 		BindingContext = mvm = new MainViewModel();
 		
 	}
+
+	public void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
+	{
+		mvm.OnItemSelected();
+    }
 }
 
 public class MainViewModel : BaseViewModel
 {
 	public string testString { get; set; } = "test";
 	public ObservableCollection<Item> listItems { get; set; } = new ObservableCollection<Item>();
+	public Item selectedItem { get; set; }
 	public Command RefreshCommand { get; }
 	public Command AddCommand { get; }
-
 
     public MainViewModel()
 	{
@@ -51,4 +56,16 @@ public class MainViewModel : BaseViewModel
         }
 
     }
+
+	public async void OnItemSelected()
+	{
+		if (selectedItem != null)
+		{
+			var navigationParameter = new Dictionary<string, object>
+			{
+				{"Contact", selectedItem }
+			};
+			await Shell.Current.GoToAsync("////EditContact", navigationParameter);
+		}
+	}
 }

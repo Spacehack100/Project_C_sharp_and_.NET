@@ -16,4 +16,9 @@
         ContentTemplate="{DataTemplate local:AddContact}"
         Route="AddContact"/>
 
+    <ShellContent 
+        Title="Edit contact"
+        ContentTemplate="{DataTemplate local:EditContact}"
+        Route="EditContact"/>
+
 </Shell>
