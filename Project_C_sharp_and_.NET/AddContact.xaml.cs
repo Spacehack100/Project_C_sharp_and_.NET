@@ -13,11 +13,15 @@ public partial class AddContact : ContentPage
 
 public class AddContactViewModel : BaseViewModel
 {
-	public string nameInput { get; set; }
-	public string gsmInput { get; set; }
-	public string landLineInput { get; set; }
+	string _nameInput = string.Empty;
+    string _gsmInput = string.Empty;
+	string _landLineInput = string.Empty;
 
-	public Command ConfirmCommand { get; }
+    public string nameInput { get { return _nameInput; } set { _nameInput = value; OnPropetyChanged(); } }
+	public string gsmInput { get { return _gsmInput; } set { _gsmInput = value; OnPropetyChanged(); } }
+    public string landLineInput { get { return _landLineInput; } set { _landLineInput = value; OnPropetyChanged(); } }
+
+    public Command ConfirmCommand { get; }
     public Command CancelCommand { get; }
 
 	public AddContactViewModel() 
@@ -30,19 +34,20 @@ public class AddContactViewModel : BaseViewModel
 	{
 		Item itemToAdd = new Item() { name=nameInput, gsmNumber=gsmInput, landLineNumber=landLineInput };
 		await DataStore.AddItem(itemToAdd);
+		ClearFields();
         await Shell.Current.GoToAsync("////MainPage");
     }
 
     public async void Cancel()
     {
+		ClearFields();
         await Shell.Current.GoToAsync("////MainPage");
     }
 
 	public void ClearFields()
 	{
 		nameInput = "";
-		gsmInput = "";
-		landLineInput = "";
-		OnPropetyChanged();
+        gsmInput = "";
+        landLineInput = "";
 	}
 }
