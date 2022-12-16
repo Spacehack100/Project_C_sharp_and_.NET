@@ -17,7 +17,7 @@ public partial class App : Application
         
         MainPage = new AppShell();
 
-        DependencyService.Register<TestDataStore>();
+        DependencyService.Register<ApiDataStore>();
     }
 }
 
