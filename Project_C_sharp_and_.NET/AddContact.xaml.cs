@@ -9,6 +9,11 @@ public partial class AddContact : ContentPage
 		InitializeComponent();
 		BindingContext= acvm = new AddContactViewModel();
 	}
+
+	public async void Alerts(string message)
+	{
+		await DisplayAlert("Alert", message, "OK");
+	}
 }
 
 public class AddContactViewModel : BaseViewModel
@@ -32,10 +37,18 @@ public class AddContactViewModel : BaseViewModel
 
 	public async void SaveItem()
 	{
-		Item itemToAdd = new Item() { name=nameInput, gsmNumber=gsmInput, landLineNumber=landLineInput };
-		await DataStore.AddItem(itemToAdd);
-		ClearFields();
-        await Shell.Current.GoToAsync("////MainPage");
+		bool exists = await CheckIfExists(nameInput);
+		if(exists == false)
+		{
+			Item itemToAdd = new Item() { name=nameInput, gsmNumber=gsmInput, landLineNumber=landLineInput };
+			await DataStore.AddItem(itemToAdd);
+			ClearFields();
+			await Shell.Current.GoToAsync("////MainPage");
+		}
+		else
+		{
+			await App.Current.MainPage.DisplayAlert("Alert", "Contact already exists", "OK");
+		}
     }
 
     public async void Cancel()

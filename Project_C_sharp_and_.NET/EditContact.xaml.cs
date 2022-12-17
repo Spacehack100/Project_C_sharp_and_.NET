@@ -37,10 +37,18 @@ public class EditContactViewModel : BaseViewModel, IQueryAttributable
 
     public async void SaveItem()
     {
-        Item itemToSave = new Item() { name = nameInput, gsmNumber = gsmInput, landLineNumber = landLineInput };
-        await DataStore.EditItem(itemToSave);
-        ClearFields();
-        await Shell.Current.GoToAsync("////MainPage");
+        bool exists = await CheckIfExists(nameInput);
+        if (exists == true)
+        {
+            Item itemToSave = new Item() { name = nameInput, gsmNumber = gsmInput, landLineNumber = landLineInput };
+            await DataStore.EditItem(itemToSave);
+            ClearFields();
+            await Shell.Current.GoToAsync("////MainPage");
+        }
+        else
+        {
+            await App.Current.MainPage.DisplayAlert("Alert", "Contact doesn't exists. No changes can be applied", "OK");
+        }
     }
 
     public async void Cancel()
