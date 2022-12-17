@@ -17,7 +17,7 @@ public partial class App : Application
         
         MainPage = new AppShell();
 
-        DependencyService.Register<TestDataStore>();
+        DependencyService.Register<ApiDataStore>();
     }
 }
 
@@ -103,8 +103,7 @@ class ApiDataStore : IDataStore
     public async Task<string> AddItem(Item itemToAdd)
     {
         HttpClient client = new HttpClient();
-        string addString = JsonConvert.SerializeObject(itemToAdd);
-        await client.PostAsJsonAsync("http://10.0.2.2:8000/api/item/", addString);
+        await client.PostAsJsonAsync("http://10.0.2.2:8000/api/item/", itemToAdd);
         return "Ok";
     }
 
@@ -119,8 +118,7 @@ class ApiDataStore : IDataStore
     public async Task<String> EditItem(Item itemToEdit)
     {
         HttpClient client = new HttpClient();
-        string addString = JsonConvert.SerializeObject(itemToEdit);
-        await client.PutAsJsonAsync("http://10.0.2.2:8000/api/item/" + itemToEdit.name, addString);
+        await client.PutAsJsonAsync("http://10.0.2.2:8000/api/item/" + itemToEdit.name, itemToEdit);
         return "Ok";
     }
 
