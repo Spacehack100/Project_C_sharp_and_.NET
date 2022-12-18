@@ -1,6 +1,5 @@
 ﻿//using CoreMotion;
 using Newtonsoft.Json;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http.Json;
@@ -169,7 +168,6 @@ class ApiDataStore : IDataStore
         string response = await client.GetStringAsync("http://10.0.2.2:8000/api/item");
         return JsonConvert.DeserializeObject<ObservableCollection<Item>>(response);
     }
-
 }
 
 public class Item

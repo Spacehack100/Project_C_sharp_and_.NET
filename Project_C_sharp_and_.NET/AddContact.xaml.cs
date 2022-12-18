@@ -9,11 +9,6 @@ public partial class AddContact : ContentPage
 		InitializeComponent();
 		BindingContext= acvm = new AddContactViewModel();
 	}
-
-	public async void Alerts(string message)
-	{
-		await DisplayAlert("Alert", message, "OK");
-	}
 }
 
 public class AddContactViewModel : BaseViewModel
@@ -50,11 +45,11 @@ public class AddContactViewModel : BaseViewModel
 		{
 			if(exists == true) 
 			{ 
-				await App.Current.MainPage.DisplayAlert("Alert", "Contact already exists", "OK");
+				await Application.Current.MainPage.DisplayAlert("Alert", "Contact already exists", "OK");
 			}
 			if(correctLenght == false)
 			{
-				await App.Current.MainPage.DisplayAlert("Alert", "Phone numbers need to be 10 (start with 0) or 12 (start with landcode) digets long", "OK");
+				await Application.Current.MainPage.DisplayAlert("Alert", "Phone numbers need to be 10 (start with 0) or 12 (start with landcode) digets long", "OK");
             }
 		}
     }

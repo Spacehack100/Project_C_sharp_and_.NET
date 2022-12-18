@@ -50,11 +50,11 @@ public class EditContactViewModel : BaseViewModel, IQueryAttributable
         {
             if (exists == false)
             {
-                await App.Current.MainPage.DisplayAlert("Alert", "Contact already exists", "OK");
+                await Application.Current.MainPage.DisplayAlert("Alert", "Contact already exists", "OK");
             }
             if (correctLenght == false)
             {
-                await App.Current.MainPage.DisplayAlert("Alert", "Phone numbers need to be 10 (start with 0) or 12 (start with landcode) digets long", "OK");
+                await Application.Current.MainPage.DisplayAlert("Alert", "Phone numbers need to be 10 (start with 0) or 12 (start with landcode) digets long", "OK");
             }
         }
     }

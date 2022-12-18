@@ -36,13 +36,13 @@ namespace Project_C_sharp_and_NET_Tests
         [InlineData("04152654848", "+325458963285", false)]
         [InlineData("04152654848", "+32458963285", false)]
         [InlineData("0415264848", "+324589632855", false)]
-        public void CheckLenghtTest(string value1, string value2, Boolean value3)
+        public void CheckLenghtTest(string value1, string value2, bool value3)
         {
             string gsm = value1;
             string land = value2;
-            Boolean expected = value3;
+            bool expected = value3;
 
-            Boolean result = BaseViewModel.CheckLenght(gsm, land);
+            bool result = BaseViewModel.CheckLenght(gsm, land);
 
             Assert.Equal(expected, result);
         }

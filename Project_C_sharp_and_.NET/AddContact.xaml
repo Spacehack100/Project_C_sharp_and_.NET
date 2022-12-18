@@ -40,11 +40,13 @@
         <Button x:Name="CancelBtn"
                 Text="Cancel"
                 Command="{Binding CancelCommand}"
-                Grid.Row="3"/>
+                Grid.Row="3"
+                Margin="5"/>
         <Button x:Name="ConfirmBtn"
                 Text="Save"
                 Command="{Binding ConfirmCommand}"
                 Grid.Row="3"
-                Grid.Column="1"/>
+                Grid.Column="1"
+                Margin="5"/>
     </Grid>
 </ContentPage>

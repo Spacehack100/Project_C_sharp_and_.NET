@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace Project_C_sharp_and_.NET;
 
@@ -11,12 +10,11 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = mvm = new MainViewModel();
-		
 	}
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        mvm.RefreshList();
+        mvm.FillList();
     }
 
     public void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -36,7 +34,7 @@ public class MainViewModel : BaseViewModel
 
     public MainViewModel()
 	{
-		RefreshCommand = new Command(RefreshList);
+		RefreshCommand = new Command(FillList);
 		AddCommand = new Command(AddContact);
     }
 
@@ -45,10 +43,6 @@ public class MainViewModel : BaseViewModel
 		await Shell.Current.GoToAsync("////AddContact");
 	}
 
-	public void RefreshList()
-	{
-		FillList();
-	}
 	public async void FillList()
     {
         listItems.Clear();
