@@ -27,8 +27,9 @@ public partial class MainPage : ContentPage
 
 public class MainViewModel : BaseViewModel
 {
-	public string testString { get; set; } = "test";
-	public ObservableCollection<Item> listItems { get; set; } = new ObservableCollection<Item>();
+	ObservableCollection<Item> _listItems = new ObservableCollection<Item>();
+
+    public ObservableCollection<Item> listItems { get { return _listItems; } set { _listItems = value; OnPropetyChanged(); } }
 	public Item selectedItem { get; set; }
 	public Command RefreshCommand { get; }
 	public Command AddCommand { get; }
@@ -51,13 +52,8 @@ public class MainViewModel : BaseViewModel
 	public async void FillList()
     {
         listItems.Clear();
-        var items = await DataStore.GetAllItems();
-		foreach(Item i in items)
-		{
-			listItems.Add(i);
-            OnPropetyChanged();
-        }
-
+        listItems = await DataStore.GetAllItems();
+		listItems = sortList(listItems);
     }
 
 	public async void OnItemSelected()
@@ -70,5 +66,11 @@ public class MainViewModel : BaseViewModel
 			};
 			await Shell.Current.GoToAsync("////EditContact", navigationParameter);
 		}
+	}
+
+	public static ObservableCollection<Item> sortList(ObservableCollection<Item> items)
+	{
+		ObservableCollection<Item> sortedList = new ObservableCollection<Item>(items.OrderBy(i => i.name));
+		return sortedList;
 	}
 }
