@@ -37,10 +37,26 @@ public class EditContactViewModel : BaseViewModel, IQueryAttributable
 
     public async void SaveItem()
     {
-        Item itemToSave = new Item() { name = nameInput, gsmNumber = gsmInput, landLineNumber = landLineInput };
-        await DataStore.EditItem(itemToSave);
-        ClearFields();
-        await Shell.Current.GoToAsync("////MainPage");
+        bool exists = await CheckIfExists(nameInput);
+        bool correctLenght = CheckLenght(gsmInput, landLineInput);
+        if (exists == true && correctLenght == true)
+        {
+            Item itemToSave = new Item() { name = nameInput, gsmNumber = gsmInput, landLineNumber = landLineInput };
+            await DataStore.EditItem(itemToSave);
+            ClearFields();
+            await Shell.Current.GoToAsync("////MainPage");
+        }
+        else
+        {
+            if (exists == false)
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Contact already exists", "OK");
+            }
+            if (correctLenght == false)
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Phone numbers need to be 10 (start with 0) or 12 (start with landcode) digets long", "OK");
+            }
+        }
     }
 
     public async void Cancel()

@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace Project_C_sharp_and_.NET;
 
@@ -11,12 +10,11 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = mvm = new MainViewModel();
-		
 	}
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        mvm.RefreshList();
+        mvm.FillList();
     }
 
     public void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -27,15 +25,16 @@ public partial class MainPage : ContentPage
 
 public class MainViewModel : BaseViewModel
 {
-	public string testString { get; set; } = "test";
-	public ObservableCollection<Item> listItems { get; set; } = new ObservableCollection<Item>();
+	ObservableCollection<Item> _listItems = new ObservableCollection<Item>();
+
+    public ObservableCollection<Item> listItems { get { return _listItems; } set { _listItems = value; OnPropetyChanged(); } }
 	public Item selectedItem { get; set; }
 	public Command RefreshCommand { get; }
 	public Command AddCommand { get; }
 
     public MainViewModel()
 	{
-		RefreshCommand = new Command(RefreshList);
+		RefreshCommand = new Command(FillList);
 		AddCommand = new Command(AddContact);
     }
 
@@ -44,20 +43,11 @@ public class MainViewModel : BaseViewModel
 		await Shell.Current.GoToAsync("////AddContact");
 	}
 
-	public void RefreshList()
-	{
-		FillList();
-	}
 	public async void FillList()
     {
         listItems.Clear();
-        var items = await DataStore.GetAllItems();
-		foreach(Item i in items)
-		{
-			listItems.Add(i);
-            OnPropetyChanged();
-        }
-
+        listItems = await DataStore.GetAllItems();
+		listItems = sortList(listItems);
     }
 
 	public async void OnItemSelected()
@@ -70,5 +60,11 @@ public class MainViewModel : BaseViewModel
 			};
 			await Shell.Current.GoToAsync("////EditContact", navigationParameter);
 		}
+	}
+
+	public static ObservableCollection<Item> sortList(ObservableCollection<Item> items)
+	{
+		ObservableCollection<Item> sortedList = new ObservableCollection<Item>(items.OrderBy(i => i.name));
+		return sortedList;
 	}
 }

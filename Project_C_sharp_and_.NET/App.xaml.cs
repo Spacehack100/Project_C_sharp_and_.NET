@@ -4,8 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 
 namespace Project_C_sharp_and_.NET;
 
@@ -41,6 +39,42 @@ public class BaseViewModel : INotifyPropertyChanged
     protected void OnPropetyChanged([CallerMemberName] string name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+
+    public async Task<Boolean> CheckIfExists(string name)
+    {
+        string nameToCheck = "";
+
+        try
+        {
+            Item itemReturned = await DataStore.GetItembyName(name);
+            nameToCheck = itemReturned.name.ToLower();
+        }
+        catch
+        {
+            Console.WriteLine("No contact with that name found");
+        }
+        
+        if(nameToCheck.Equals(name.ToLower()))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }  
+    }
+
+    public static Boolean CheckLenght(string gsm, string landline)
+    {
+        if((gsm.Length == 12 || gsm.Length == 10) && (landline.Length == 12 || landline.Length == 10))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 
@@ -111,8 +145,7 @@ class ApiDataStore : IDataStore
     {
         HttpClient client = new HttpClient();
         string response = await client.GetStringAsync("http://10.0.2.2:8000/api/item/" + name);
-        Item temp = new Item();
-        return temp;
+        return JsonConvert.DeserializeObject<Item>(response);
     }
 
     public async Task<String> EditItem(Item itemToEdit)
@@ -135,7 +168,6 @@ class ApiDataStore : IDataStore
         string response = await client.GetStringAsync("http://10.0.2.2:8000/api/item");
         return JsonConvert.DeserializeObject<ObservableCollection<Item>>(response);
     }
-
 }
 
 public class Item

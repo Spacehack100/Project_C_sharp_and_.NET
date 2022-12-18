@@ -17,13 +17,15 @@
                     SemanticProperties.Hint="Refresh the phone list"
                     Command="{Binding RefreshCommand}"
                     HorizontalOptions="CenterAndExpand"
-                    VerticalOptions="Start"/>
+                    VerticalOptions="Start"
+                    Margin="5"/>
 
                 <Button
                     x:Name="AddBtn"
                     Text="Add contact"
                     SemanticProperties.Hint="Add contact to list"
-                    Command="{Binding AddCommand}"/>
+                    Command="{Binding AddCommand}"
+                    Margin="5"/>
             </HorizontalStackLayout>
 
             <ListView ItemsSource="{Binding listItems}" ItemSelected="OnItemSelected" RowHeight="70" SelectedItem="{Binding selectedItem}">
