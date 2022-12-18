@@ -38,7 +38,8 @@ public class AddContactViewModel : BaseViewModel
 	public async void SaveItem()
 	{
 		bool exists = await CheckIfExists(nameInput);
-		if(exists == false)
+		bool correctLenght = CheckLenght(gsmInput, landLineInput);
+		if(exists == false && correctLenght == true)
 		{
 			Item itemToAdd = new Item() { name=nameInput, gsmNumber=gsmInput, landLineNumber=landLineInput };
 			await DataStore.AddItem(itemToAdd);
@@ -47,7 +48,14 @@ public class AddContactViewModel : BaseViewModel
 		}
 		else
 		{
-			await App.Current.MainPage.DisplayAlert("Alert", "Contact already exists", "OK");
+			if(exists == true) 
+			{ 
+				await App.Current.MainPage.DisplayAlert("Alert", "Contact already exists", "OK");
+			}
+			if(correctLenght == false)
+			{
+				await App.Current.MainPage.DisplayAlert("Alert", "Phone numbers need to be 10 (start with 0) or 12 (start with landcode) digets long", "OK");
+            }
 		}
     }
 

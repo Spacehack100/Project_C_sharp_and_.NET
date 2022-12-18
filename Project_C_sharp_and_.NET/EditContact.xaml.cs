@@ -38,7 +38,8 @@ public class EditContactViewModel : BaseViewModel, IQueryAttributable
     public async void SaveItem()
     {
         bool exists = await CheckIfExists(nameInput);
-        if (exists == true)
+        bool correctLenght = CheckLenght(gsmInput, landLineInput);
+        if (exists == true && correctLenght == true)
         {
             Item itemToSave = new Item() { name = nameInput, gsmNumber = gsmInput, landLineNumber = landLineInput };
             await DataStore.EditItem(itemToSave);
@@ -47,7 +48,14 @@ public class EditContactViewModel : BaseViewModel, IQueryAttributable
         }
         else
         {
-            await App.Current.MainPage.DisplayAlert("Alert", "Contact doesn't exists. No changes can be applied", "OK");
+            if (exists == false)
+            {
+                await App.Current.MainPage.DisplayAlert("Alert", "Contact already exists", "OK");
+            }
+            if (correctLenght == false)
+            {
+                await App.Current.MainPage.DisplayAlert("Alert", "Phone numbers need to be 10 (start with 0) or 12 (start with landcode) digets long", "OK");
+            }
         }
     }
 

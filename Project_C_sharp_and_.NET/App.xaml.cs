@@ -65,6 +65,18 @@ public class BaseViewModel : INotifyPropertyChanged
             return false;
         }  
     }
+
+    public static Boolean CheckLenght(string gsm, string landline)
+    {
+        if((gsm.Length == 12 || gsm.Length == 10) && (landline.Length == 12 || landline.Length == 10))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 class TestDataStore : IDataStore
